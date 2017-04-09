@@ -1,4 +1,4 @@
-package sag
+package sam
 
 import (
 	"bufio"
@@ -12,7 +12,7 @@ type SagMarkDown struct {
 	OnTable      func(columns map[string]string) error
 }
 
-func (sag SagMarkDown) tableEach(line string, scanner *bufio.Scanner) error {
+func (sam SagMarkDown) tableEach(line string, scanner *bufio.Scanner) error {
 	tokens := strings.Split(line, `|`)
 	tableColumns := make([]string, len(tokens))
 	for i, name := range tokens {
@@ -34,7 +34,7 @@ func (sag SagMarkDown) tableEach(line string, scanner *bufio.Scanner) error {
 			tableValues[tableColumns[i]] = strings.Trim(token, ` `)
 		}
 
-		if err := sag.OnTable(tableValues); err != nil {
+		if err := sam.OnTable(tableValues); err != nil {
 			return err
 		}
 	}
@@ -42,7 +42,7 @@ func (sag SagMarkDown) tableEach(line string, scanner *bufio.Scanner) error {
 	return nil
 }
 
-func (sag SagMarkDown) Start(filePath string) error {
+func (sam SagMarkDown) Start(filePath string) error {
 	fp, err := os.Open(filePath)
 	if err != nil {
 		return err
@@ -55,14 +55,14 @@ func (sag SagMarkDown) Start(filePath string) error {
 		line := scanner.Text()
 
 		if strings.HasPrefix(line, `|`) {
-			if err := sag.tableEach(line, scanner); err != nil {
+			if err := sam.tableEach(line, scanner); err != nil {
 				return nil
 			}
 
 			continue
 		}
 
-		for search, onOneLine := range sag.OnOneLines {
+		for search, onOneLine := range sam.OnOneLines {
 			tokens := strings.Split(line, ` `)
 			if tokens[0] == search {
 				onOneLine(tokens[1])

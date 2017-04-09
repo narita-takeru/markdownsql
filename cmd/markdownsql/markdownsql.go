@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/narita-takeru/markdownsql/sag"
+	"github.com/narita-takeru/markdownsql/sam"
 	"github.com/narita-takeru/markdownsql/sqldef"
 	"os"
 	"strings"
@@ -41,7 +41,7 @@ func main() {
 	isColumnMode := false
 	isIndexesMode := false
 
-	sm := sag.SagMarkDown{
+	sm := sam.SagMarkDown{
 		OnOneLines: map[string]func(line string) error{
 			"#": func(line string) error {
 				sqlDef.DatabaseName = line
