@@ -41,7 +41,7 @@ func main() {
 	isColumnMode := false
 	isIndexesMode := false
 
-	sm := sam.SagMarkDown{
+	sm := sam.SamParser{
 		OnOneLines: map[string]func(line string) error{
 			"#": func(line string) error {
 				sqlDef.DatabaseName = line

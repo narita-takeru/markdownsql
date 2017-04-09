@@ -6,13 +6,13 @@ import (
 	"strings"
 )
 
-type SagMarkDown struct {
+type SamParser struct {
 	OnOneLines   map[string]func(line string) error
 	OnMultiLines map[string]func(lines []string) error
 	OnTable      func(columns map[string]string) error
 }
 
-func (sam SagMarkDown) tableEach(line string, scanner *bufio.Scanner) error {
+func (sam SamParser) tableEach(line string, scanner *bufio.Scanner) error {
 	tokens := strings.Split(line, `|`)
 	tableColumns := make([]string, len(tokens))
 	for i, name := range tokens {
@@ -42,7 +42,7 @@ func (sam SagMarkDown) tableEach(line string, scanner *bufio.Scanner) error {
 	return nil
 }
 
-func (sam SagMarkDown) Start(filePath string) error {
+func (sam SamParser) Start(filePath string) error {
 	fp, err := os.Open(filePath)
 	if err != nil {
 		return err
