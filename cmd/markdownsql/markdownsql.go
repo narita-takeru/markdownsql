@@ -9,10 +9,16 @@ import (
 )
 
 func onTableColumns(tbl *sqldef.TableDefinition, columns map[string]string) error {
+
+	nullable := false
+	if columns[`null`] == `YES` {
+		nullable = true
+	}
+
 	colDef := sqldef.ColumnDefinition{
 		Name:    columns[`name`],
 		Type:    columns[`type`],
-		Null:    false,
+		Null:    nullable,
 		Default: columns[`default`],
 		Key:     columns[`key`],
 		Comment: columns[`comment`],
